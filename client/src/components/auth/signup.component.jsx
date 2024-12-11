@@ -11,7 +11,6 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import axios from "axios";
-import { API_URL } from "../../environment/constant";
 import { Navigate, useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 
@@ -27,11 +26,14 @@ export default function Signup() {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
 
-        const res = await axios.post(`${API_URL}/users/signup`, {
-            email: data.get("email"),
-            password: data.get("password"),
-            fullName: data.get("firstName"),
-        });
+        const res = await axios.post(
+            `${import.meta.env.VITE_API_URL}/users/signup`,
+            {
+                email: data.get("email"),
+                password: data.get("password"),
+                fullName: data.get("firstName"),
+            }
+        );
 
         localStorage.setItem("token", res.data.token);
         const decoded = jwtDecode(res.data.token);

@@ -11,7 +11,6 @@ import { useEffect, useState } from "react";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { API_URL } from "../../environment/constant";
 
 export default function EventAdmin() {
     const [search, setSearch] = useState("");
@@ -25,7 +24,7 @@ export default function EventAdmin() {
 
     useEffect(() => {
         axios
-            .get(`${API_URL}/event/user/all`, {
+            .get(`${import.meta.env.VITE_API_URL}/event/user/all`, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("token")}`,
                 },

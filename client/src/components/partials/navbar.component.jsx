@@ -142,7 +142,7 @@ export default function Navbar({ navButtonPage }) {
                                         key={3}
                                         onClick={handleCloseUserMenu}
                                     >
-                                        <Link to={`/Logout`}>Logout</Link>
+                                        <Link to={`/logout`}>Logout</Link>
                                     </MenuItem>
                                 </Menu>
                             </Box>

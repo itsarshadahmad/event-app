@@ -1,7 +1,6 @@
 import axios from "axios";
 import { useEffect } from "react";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
-import { API_URL } from "../../environment/constant";
 
 export default function DeleteEvent() {
     const { id } = useParams("id");
@@ -15,7 +14,7 @@ export default function DeleteEvent() {
 
     useEffect(() => {
         axios
-            .get(`${API_URL}/event/delete/${id}`, {
+            .get(`${import.meta.env.VITE_API_URL}/event/delete/${id}`, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("token")}`,
                 },

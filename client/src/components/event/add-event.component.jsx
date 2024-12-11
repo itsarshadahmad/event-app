@@ -18,7 +18,6 @@ import { styled } from "@mui/material/styles";
 import DownloadDoneIcon from "@mui/icons-material/DownloadDone";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import { API_URL } from "../../environment/constant";
 
 const VisuallyHiddenInput = styled("input")({
     clip: "rect(0 0 0 0)",
@@ -70,7 +69,7 @@ export default function AddEvent() {
     const handleSubmit = async () => {
         const email = localStorage.getItem("email");
         await axios.post(
-            `${API_URL}/event/create`,
+            `${import.meta.env.VITE_API_URL}/event/create`,
             {
                 title,
                 description,

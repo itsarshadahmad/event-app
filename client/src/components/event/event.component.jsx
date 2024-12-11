@@ -12,7 +12,6 @@ import Announcements from "./announcements.component";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { API_URL } from "../../environment/constant";
 import Error from "../partials/error.component";
 
 export default function Event() {
@@ -21,7 +20,7 @@ export default function Event() {
 
     useEffect(() => {
         axios
-            .get(`${API_URL}/event/public/${id}`, {
+            .get(`${import.meta.env.VITE_API_URL}/event/public/${id}`, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("token")}`,
                 },

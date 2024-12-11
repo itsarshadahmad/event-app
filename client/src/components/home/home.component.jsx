@@ -11,7 +11,6 @@ import EventCard from "../event/event-card.component";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { API_URL } from "../../environment/constant";
 import { events } from "../../data";
 
 export default function Home() {
@@ -20,11 +19,10 @@ export default function Home() {
     const [userEvents, setUserEvents] = useState([]);
 
     useEffect(() => {
-        console.log(API_URL)
         const token = localStorage.getItem("token");
         if (token) {
             axios
-                .get(`${API_URL}/event/user/all`, {
+                .get(`${import.meta.env.VITE_API_URL}/event/user/all`, {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem(
                             "token"
@@ -36,7 +34,7 @@ export default function Home() {
         }
 
         axios
-            .get(`${API_URL}/event/all`, {
+            .get(`${import.meta.env.VITE_API_URL}/event/all`, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("token")}`,
                 },

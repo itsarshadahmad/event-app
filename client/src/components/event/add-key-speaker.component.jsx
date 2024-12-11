@@ -8,7 +8,6 @@ import {
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { API_URL } from "../../environment/constant";
 
 export default function AddKeySpeaker() {
     const [title, setTitle] = useState();
@@ -21,7 +20,7 @@ export default function AddKeySpeaker() {
         e.preventDefault();
 
         axios.post(
-            `${API_URL}/event/speaker/new`,
+            `${import.meta.env.VITE_API_URL}/event/speaker/new`,
             {
                 name: title,
                 bio: description,

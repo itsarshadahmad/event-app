@@ -13,7 +13,6 @@ import Container from "@mui/material/Container";
 import { useState } from "react";
 import ForgotPassword from "./forgot-password.component";
 import axios from "axios";
-import { API_URL } from "../../environment/constant";
 import { Navigate, useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 
@@ -41,10 +40,13 @@ export default function SignIn() {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        const res = await axios.post(`${API_URL}/users/login`, {
-            email,
-            password,
-        });
+        const res = await axios.post(
+            `${import.meta.env.VITE_API_URL}/users/login`,
+            {
+                email,
+                password,
+            }
+        );
 
         // console.log(res.data.token);
 

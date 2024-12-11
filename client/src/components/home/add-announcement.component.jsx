@@ -8,7 +8,6 @@ import {
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { API_URL } from "../../environment/constant";
 
 export default function AddAnnouncement() {
     const [title, setTitle] = useState("");
@@ -20,7 +19,7 @@ export default function AddAnnouncement() {
         e.preventDefault();
 
         axios.post(
-            `${API_URL}/event/announcement/new`,
+            `${import.meta.env.VITE_API_URL}/event/announcement/new`,
             {
                 title,
                 description,
