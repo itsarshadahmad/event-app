@@ -11,7 +11,6 @@ import EventCard from "../event/event-card.component";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { events } from "../../data";
 
 export default function Home() {
     const [search, setSearch] = useState("");
@@ -30,7 +29,6 @@ export default function Home() {
                     },
                 })
                 .then((res) => setUserEvents(res.data));
-            setUserEvents(events);
         }
 
         axios
