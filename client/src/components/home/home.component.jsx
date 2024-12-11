@@ -11,6 +11,7 @@ import EventCard from "../event/event-card.component";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { ErrorBoundary } from "react-error-boundary";
 
 export default function Home() {
     const [search, setSearch] = useState("");
@@ -42,56 +43,106 @@ export default function Home() {
             });
     }, []);
 
-    return (
-        <Container>
-            <FormControl variant="standard" sx={{ my: 2, display: "flex" }}>
-                <FormControl sx={{ width: "100%" }} variant="outlined">
-                    <OutlinedInput
-                        size="small"
-                        id="search"
-                        placeholder="Search…"
-                        value={search}
-                        onChange={(e) => setSearch(e.target.value)}
-                        sx={{ flexGrow: 1 }}
-                        startAdornment={
-                            <InputAdornment
-                                position="start"
-                                sx={{ color: "text.primary" }}
-                            >
-                                <SearchRoundedIcon fontSize="small" />
-                            </InputAdornment>
-                        }
-                        inputProps={{
-                            "aria-label": "search",
-                        }}
-                    />
-                </FormControl>
-            </FormControl>
+    function MyFallbackComponent({ error, resetErrorBoundary }) {
+        return (
+            <div role="alert">
+                <p>Something went wrong:</p>
+                <pre>{error.message}</pre>
+                <button onClick={resetErrorBoundary}>Try again</button>
+            </div>
+        );
+    }
 
-            {userEvents.length > 0 && (
-                <Paper
-                    sx={{
-                        p: 2,
-                        my: 2,
-                    }}
-                    elevation={3}
-                >
-                    <Typography component="h1" variant="h4" sx={{ mb: 2 }}>
-                        Registered Events
+    // Error logging function
+    function logErrorToService(error, info) {
+        // Use your preferred error logging service
+        console.error("Caught an error:", error, info);
+    }
+
+    return (
+        <ErrorBoundary
+            fallback={MyFallbackComponent}
+            onError={logErrorToService}
+        >
+            <Container>
+                <FormControl variant="standard" sx={{ my: 2, display: "flex" }}>
+                    <FormControl sx={{ width: "100%" }} variant="outlined">
+                        <OutlinedInput
+                            size="small"
+                            id="search"
+                            placeholder="Search…"
+                            value={search}
+                            onChange={(e) => setSearch(e.target.value)}
+                            sx={{ flexGrow: 1 }}
+                            startAdornment={
+                                <InputAdornment
+                                    position="start"
+                                    sx={{ color: "text.primary" }}
+                                >
+                                    <SearchRoundedIcon fontSize="small" />
+                                </InputAdornment>
+                            }
+                            inputProps={{
+                                "aria-label": "search",
+                            }}
+                        />
+                    </FormControl>
+                </FormControl>
+
+                {userEvents.length > 0 && (
+                    <Paper
+                        sx={{
+                            p: 2,
+                            my: 2,
+                        }}
+                        elevation={3}
+                    >
+                        <Typography component="h1" variant="h4" sx={{ mb: 2 }}>
+                            Registered Events
+                        </Typography>
+                        <Box
+                            sx={{
+                                display: "grid",
+                                gridTemplateColumns: {
+                                    xs: "repeat(auto-fit, minmax(200px, 1fr))",
+                                    sm: "repeat(auto-fit, minmax(250px, 1fr))",
+                                },
+                                gridGap: 20,
+                                justifyContent: "center",
+                                alignItems: "center",
+                            }}
+                        >
+                            {userEvents.map((val, i) => (
+                                <EventCard
+                                    key={i}
+                                    title={val.title}
+                                    description={val.description.split("", 120)}
+                                    id={val._id}
+                                />
+                            ))}
+                        </Box>
+                    </Paper>
+                )}
+                <Typography component="h1" variant="h4" sx={{ mt: 4, mb: 1 }}>
+                    Events
+                </Typography>
+                {allEvents.length === 0 && (
+                    <Typography variant="h2" sx={{ mt: 4, mb: 1 }}>
+                        No events found
                     </Typography>
+                )}
+                {allEvents.length > 0 && (
                     <Box
                         sx={{
                             display: "grid",
-                            gridTemplateColumns: {
-                                xs: "repeat(auto-fit, minmax(200px, 1fr))",
-                                sm: "repeat(auto-fit, minmax(250px, 1fr))",
-                            },
+                            gridTemplateColumns:
+                                "repeat(auto-fit, minmax(250px, 1fr))",
                             gridGap: 20,
                             justifyContent: "center",
                             alignItems: "center",
                         }}
                     >
-                        {userEvents.map((val, i) => (
+                        {allEvents.map((val, i) => (
                             <EventCard
                                 key={i}
                                 title={val.title}
@@ -100,37 +151,8 @@ export default function Home() {
                             />
                         ))}
                     </Box>
-                </Paper>
-            )}
-            <Typography component="h1" variant="h4" sx={{ mt: 4, mb: 1 }}>
-                Events
-            </Typography>
-            {allEvents.length === 0 && (
-                <Typography variant="h2" sx={{ mt: 4, mb: 1 }}>
-                    No events found
-                </Typography>
-            )}
-            {allEvents.length > 0 && (
-                <Box
-                    sx={{
-                        display: "grid",
-                        gridTemplateColumns:
-                            "repeat(auto-fit, minmax(250px, 1fr))",
-                        gridGap: 20,
-                        justifyContent: "center",
-                        alignItems: "center",
-                    }}
-                >
-                    {allEvents.map((val, i) => (
-                        <EventCard
-                            key={i}
-                            title={val.title}
-                            description={val.description.split("", 120)}
-                            id={val._id}
-                        />
-                    ))}
-                </Box>
-            )}
-        </Container>
+                )}
+            </Container>
+        </ErrorBoundary>
     );
 }
