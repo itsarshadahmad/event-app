@@ -32,6 +32,8 @@ export default function Home() {
                 .then((res) => setUserEvents(res.data));
         }
 
+        console.log(userEvents);
+
         axios
             .get(`${import.meta.env.VITE_API_URL}/event/all`, {
                 headers: {
@@ -41,6 +43,8 @@ export default function Home() {
             .then((res) => {
                 setAllEvents(res.data);
             });
+
+        console.log(allEvents);
     }, []);
 
     function MyFallbackComponent({ error, resetErrorBoundary }) {
