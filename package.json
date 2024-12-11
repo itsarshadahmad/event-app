@@ -1,0 +1,19 @@
+{
+  "name": "event-management-system",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "install-server": "npm install --prefix server",
+    "install-client": "npm install --prefix client",
+    "install": "npm install && npm run install-server && npm run install-client",
+    "server": "npm run start --prefix server",
+    "client": "npm run preview --prefix client",
+    "deploy": "concurrently \"npm run server\" \"npm run client\"",
+    "build": "npm run build --prefix client",
+    "deploy-cluster": "npm run build --prefix client && npm run cluster --prefix server"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
