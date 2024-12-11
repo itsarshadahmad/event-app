@@ -105,24 +105,32 @@ export default function Home() {
             <Typography component="h1" variant="h4" sx={{ mt: 4, mb: 1 }}>
                 Events
             </Typography>
-            <Box
-                sx={{
-                    display: "grid",
-                    gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
-                    gridGap: 20,
-                    justifyContent: "center",
-                    alignItems: "center",
-                }}
-            >
-                {allEvents.map((val, i) => (
-                    <EventCard
-                        key={i}
-                        title={val.title}
-                        description={val.description.split("", 120)}
-                        id={val._id}
-                    />
-                ))}
-            </Box>
+            {allEvents.length === 0 && (
+                <Typography variant="h2" sx={{ mt: 4, mb: 1 }}>
+                    No events found
+                </Typography>
+            )}
+            {allEvents.length > 0 && (
+                <Box
+                    sx={{
+                        display: "grid",
+                        gridTemplateColumns:
+                            "repeat(auto-fit, minmax(250px, 1fr))",
+                        gridGap: 20,
+                        justifyContent: "center",
+                        alignItems: "center",
+                    }}
+                >
+                    {allEvents.map((val, i) => (
+                        <EventCard
+                            key={i}
+                            title={val.title}
+                            description={val.description.split("", 120)}
+                            id={val._id}
+                        />
+                    ))}
+                </Box>
+            )}
         </Container>
     );
 }
