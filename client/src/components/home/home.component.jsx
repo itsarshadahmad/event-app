@@ -20,6 +20,7 @@ export default function Home() {
     const [userEvents, setUserEvents] = useState([]);
 
     useEffect(() => {
+        console.log(API_URL)
         const token = localStorage.getItem("token");
         if (token) {
             axios
